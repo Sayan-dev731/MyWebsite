@@ -309,29 +309,21 @@ window.addEventListener('load', () => {
 // document.body.classList.toggle('dark-mode');
 
 
-const counterElement = document.getElementById('coding-counter');
+var startDate = new Date('2018-01-01');
+var endDate = new Date();
+var difference = endDate.getTime() - startDate.getTime();
+var hoursPassed = Math.floor(difference / (1000 * 60 * 60));
+var counterElement = document.getElementById('coding-counter');
+counterElement.setAttribute('data-purecounter-end', hoursPassed);
 
-const startValue = parseInt(counterElement.getAttribute('data-purecounter-start'));
+function updateCounter() {
+    var currentDifference = new Date().getTime() - startDate.getTime();
+    var currentHoursPassed = Math.floor(currentDifference / (1000 * 60 * 60));
+    counterElement.textContent = currentHoursPassed;
 
-setInterval(async () => {
-    try {
-        // Fetch current date and time from World Clock API
-        const response = await fetch('https://worldclockapi.com/api/json/utc/now');
-        const data = await response.json();
-        const currentDate = new Date(data.currentDateTime);
+    setTimeout(updateCounter, 1000);
+}
 
-        const startDate = new Date('January 1, 2018');
-        const timeDifference = currentDate - startDate;
+updateCounter();
 
-        const hoursPassed = timeDifference / (1000 * 60 * 60);
-
-        const endValue = startValue + hoursPassed;
-
-        counterElement.setAttribute('data-purecounter-end', endValue);
-
-        counterElement.textContent = Math.floor(endValue);
-    } catch (error) {
-        console.error('An error occurred while fetching data:', error);
-    }
-}, 1000 * 60 * 60);
 
