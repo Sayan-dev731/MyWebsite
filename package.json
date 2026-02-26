@@ -1,0 +1,32 @@
+{
+  "name": "mywebsite",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Sayan-dev731/MyWebsite#readme",
+  "bugs": {
+    "url": "https://github.com/Sayan-dev731/MyWebsite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sayan-dev731/MyWebsite.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server/server.js",
+    "start": "node server/server.js",
+    "build": "echo \"No build step defined\""
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
