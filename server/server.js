@@ -1,64 +1,50 @@
-const PATH = require("path");
-const env = require("dotenv");
-const express = require("express");
+import PATH from "path";
+import env from "dotenv";
+import express from "express";
 
 env.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const __filename = PATH.basename(import.meta.url);
+const __dirname = PATH.dirname(__filename);
+
+app.use("/assets", express.static("../public/assets", { root: __dirname }));
+
 app.use(
-  "/assets",
-  express.static(PATH.join(__dirname, "..", "public", "assets")),
+    express.json({
+        limit: "10kb",
+    }),
 );
 
-app.get("/prozess", (req, res) => {
-  res.sendFile(PATH.join(__dirname, "..", "views", "pages", "home.html"));
+app.use(
+    express.urlencoded({
+        extended: true,
+        limit: "10kb",
+    }),
+);
+
+app.get("/projects", (req, res) => {
+    res.sendFile("views/pages/projects.html", { root: __dirname });
 });
 
-app.get("/kontakt", (req, res) => {
-  res.sendFile(PATH.join(__dirname, "..", "views", "pages", "contact.html"));
+app.get("/contact", (req, res) => {
+    res.sendFile("views/pages/contact.html", { root: __dirname });
 });
 
-app.get("/preis", (req, res) => {
-  res.sendFile(PATH.join(__dirname, "..", "views", "pages", "preis.html"));
-});
-
-app.get("/adb", (req, res) => {
-  res.sendFile(PATH.join(__dirname, "..", "views", "pages", "agb.html"));
-});
-
-app.get("/datenschutz", (req, res) => {
-  res.sendFile(
-    PATH.join(__dirname, "..", "views", "pages", "datenschutz.html"),
-  );
-});
-
-app.get("/impressum", (req, res) => {
-  res.sendFile(PATH.join(__dirname, "..", "views", "pages", "impressum.html"));
+app.get("/experience", (req, res) => {
+    res.sendFile("views/pages/experience.html", { root: __dirname });
 });
 
 app.get("/", (req, res) => {
-  res.sendFile(PATH.join(__dirname, "..", "views", "pages", "services.html"));
+    res.sendFile("views/pages/home.html", { root: __dirname });
 });
 
 app.use((req, res) => {
-  res.status(404).sendFile(PATH.join(__dirname, "..", "views", "404.html"));
+    res.status(404).sendFile("views/404.html", { root: __dirname });
 });
 
-app.use(
-  express.json({
-    limit: "10kb",
-  }),
-);
-
-app.use(
-  express.urlencoded({
-    extended: true,
-    limit: "10kb",
-  }),
-);
-
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });

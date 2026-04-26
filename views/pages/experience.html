@@ -138,6 +138,25 @@
     <script src="https://edbo.vercel.app/scripts/app.js" defer></script>
     <!--<script src="https://localhost:3000/scripts/app.js" defer></script>-->
     <script>
+        // Force a full page navigation for in-site links so every page
+        // initializes cleanly (fixes broken footer scroll-pin animation
+        // that only works after a hard reload when Swup is used).
+        document.addEventListener('click', function (e) {
+            if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            var link = e.target.closest && e.target.closest('a[href]');
+            if (!link) return;
+            if (link.target && link.target !== '' && link.target !== '_self') return;
+            if (link.hasAttribute('download')) return;
+            var href = link.getAttribute('href');
+            if (!href || href.charAt(0) === '#' || href.indexOf('javascript:') === 0) return;
+            var url;
+            try { url = new URL(link.href, window.location.href); } catch (_) { return; }
+            if (url.origin !== window.location.origin) return;
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            window.location.assign(url.href);
+        }, true);
+
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function (e) {
             if (e.keyCode == 123) return false;
@@ -210,7 +229,7 @@
                     </li>
                     <li class="header_nav-list-item">
                         <a data-nav-link="" data-text="Projects" data-swup-preload=""
-                            data-wf--header-button--variant="base" href="/prozess"
+                            data-wf--header-button--variant="base" href="/projects"
                             class="header_nav-button u-c1 w-inline-block">
                             <span class="header_nav-button-inner">
                                 <span class="header_nav-button-text">Projects</span>
@@ -220,7 +239,7 @@
                     </li>
                     <li class="header_nav-list-item">
                         <a data-nav-link="" data-text="Experience" data-swup-preload=""
-                            data-wf--header-button--variant="base" href="/preis" aria-current="page"
+                            data-wf--header-button--variant="base" href="/experience" aria-current="page"
                             class="header_nav-button u-c1 w-inline-block w--current">
                             <span class="header_nav-button-inner">
                                 <span class="header_nav-button-text">Experience</span>
@@ -230,7 +249,7 @@
                     </li>
                     <li class="header_nav-list-item">
                         <a data-nav-link="" data-text="Contact" data-swup-preload=""
-                            data-wf--header-button--variant="base" href="/kontakt"
+                            data-wf--header-button--variant="base" href="/contact"
                             class="header_nav-button u-c1 w-inline-block">
                             <span class="header_nav-button-inner">
                                 <span class="header_nav-button-text">Contact</span>
@@ -289,7 +308,7 @@
                             </li>
                             <li class="menu_nav-list-item">
                                 <a data-menu-link="" data-button="" data-text="Projects"
-                                    data-wf--menu-button--variant="base" href="/prozess"
+                                    data-wf--menu-button--variant="base" href="/projects"
                                     class="menu_nav-button u-c1 w-inline-block">
                                     <span class="menu_nav-button-inner">
                                         <span class="menu_nav-button-text">Projects</span>
@@ -299,7 +318,7 @@
                             </li>
                             <li class="menu_nav-list-item">
                                 <a data-menu-link="" data-button="" data-text="Experience"
-                                    data-wf--menu-button--variant="base" href="/preis" aria-current="page"
+                                    data-wf--menu-button--variant="base" href="/experience" aria-current="page"
                                     class="menu_nav-button u-c1 w-inline-block w--current">
                                     <span class="menu_nav-button-inner">
                                         <span class="menu_nav-button-text">Experience</span>
@@ -309,7 +328,7 @@
                             </li>
                             <li class="menu_nav-list-item">
                                 <a data-menu-link="" data-button="" data-text="Contact"
-                                    data-wf--menu-button--variant="base" href="/kontakt"
+                                    data-wf--menu-button--variant="base" href="/contact"
                                     class="menu_nav-button u-c1 w-inline-block">
                                     <span class="menu_nav-button-inner">
                                         <span class="menu_nav-button-text">Contact</span>
@@ -1386,7 +1405,7 @@
                 <div data-footer-action-item="" class="footer_card-item">
                     <div class="footer_card">
                         <div data-footer-action-length="" class="footer_card-inner">
-                            <span class="footer_card-title u-f2">Resume</span>
+                            <span class="footer_card-title u-f2">Some Flex</span>
                         </div>
                         <span class="footer_card-bg">
                             <span class="footer_card-bg-left"></span>
@@ -1398,7 +1417,7 @@
                 <div data-footer-action-item="" class="footer_card-item">
                     <div class="footer_card">
                         <div data-footer-action-length="" class="footer_card-inner">
-                            <span class="footer_card-title u-f2">Socials</span>
+                            <span class="footer_card-title u-f2">Lets Connect!</span>
                         </div>
                         <span class="footer_card-bg">
                             <span class="footer_card-bg-left"></span>
@@ -1410,7 +1429,7 @@
                 <div data-footer-action-item="" class="footer_card-item">
                     <div class="footer_card">
                         <div data-footer-action-length="" class="footer_card-inner">
-                            <span class="footer_card-title u-f2">Projects</span>
+                            <span class="footer_card-title u-f2">Follow Up!</span>
                         </div>
                         <span class="footer_card-bg">
                             <span class="footer_card-bg-left"></span>
@@ -1422,7 +1441,7 @@
                 <div data-footer-action-item="" class="footer_card-item">
                     <div class="footer_card">
                         <div data-footer-action-length="" class="footer_card-inner">
-                            <span class="footer_card-title u-f2">About</span>
+                            <span class="footer_card-title u-f2">Achievement</span>
                         </div>
                         <span class="footer_card-bg">
                             <span class="footer_card-bg-left"></span>
@@ -1434,7 +1453,7 @@
                 <div data-footer-action-item="" class="footer_card-item">
                     <div class="footer_card">
                         <div data-footer-action-length="" class="footer_card-inner">
-                            <span class="footer_card-title u-f2">Contact</span>
+                            <span class="footer_card-title u-f2">More Visuals</span>
                         </div>
                         <span class="footer_card-bg">
                             <span class="footer_card-bg-left"></span>
@@ -1458,7 +1477,7 @@
                             </div>
                         </div>
                         <div class="footer_next-page-action">
-                            <a data-button-hover="" data-text="Experience" href="/kontakt"
+                            <a data-button-hover="" data-text="Experience" href="/contact"
                                 class="button-default is-yellow w-inline-block">
                                 <span class="button-default_button-container">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"
@@ -1483,18 +1502,18 @@
                                     </a>
                                 </li>
                                 <li class="footer_links-item">
-                                    <a href="/prozess" class="footer_link u-c1 w-inline-block">
+                                    <a href="/projects" class="footer_link u-c1 w-inline-block">
                                         <span class="footer_link-text">Projects</span>
                                     </a>
                                 </li>
                                 <li class="footer_links-item">
-                                    <a href="/preis" class="footer_link u-c1 w-inline-block w--current"
+                                    <a href="/experience" class="footer_link u-c1 w-inline-block w--current"
                                         aria-current="page">
                                         <span class="footer_link-text">Experience</span>
                                     </a>
                                 </li>
                                 <li class="footer_links-item">
-                                    <a href="/kontakt" class="footer_link u-c1 w-inline-block">
+                                    <a href="/contact" class="footer_link u-c1 w-inline-block">
                                         <span class="footer_link-text">Contact</span>
                                     </a>
                                 </li>
