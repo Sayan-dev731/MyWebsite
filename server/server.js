@@ -41,6 +41,13 @@ app.get("/", (req, res) => {
     res.sendFile("views/pages/home.html", { root: __dirname });
 });
 
+app.get("/api/v1/health", (req, res) => {
+    res.json({
+        "status": 200,
+        "message": "the server is running healthy."
+    })
+})
+
 app.use((req, res) => {
     res.status(404).sendFile("views/404.html", { root: __dirname });
 });
